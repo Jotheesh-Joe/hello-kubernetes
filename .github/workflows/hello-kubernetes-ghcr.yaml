@@ -23,3 +23,30 @@ jobs:
           IMAGE_TAG="ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}"
           docker build . -f app/Dockerfile --tag $IMAGE_TAG
           docker push $IMAGE_TAG
+  
+  update-hellokubernetes-helmchart:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update docker image version in values yaml
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          commitChange: true
+          branch: main
+          createPR: false
+          message: "hello-kubernetes helm chart docker version updated"  
+          changes: |
+            {
+              "helm/hello-kubernetes/values.yaml": {
+                "docker.image.version": "${{ github.sha }}"
+              },
+              "helm/hello-kubernetes/Chart.yaml.yaml": {
+                "version": "${{ github.run_number }}"
+              }
+            }
+          
+        
