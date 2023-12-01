@@ -48,7 +48,7 @@ jobs:
                 "docker.image.version": "${{ github.sha }}"
               },
               "helm/hello-kubernetes/Chart.yaml": {
-                "version": "${{ github.run_number }}"
+                "version": "0.${{ github.run_number }}"
               }
             }
           
