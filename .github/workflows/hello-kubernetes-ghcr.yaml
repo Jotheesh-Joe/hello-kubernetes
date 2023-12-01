@@ -24,7 +24,10 @@ jobs:
           docker build . -f app/Dockerfile --tag $IMAGE_TAG
           docker push $IMAGE_TAG
   
+  
   update-hellokubernetes-helmchart:
+    needs: [publish-hello-kubernetes-image]
+    if: ${{ always() && !cancelled() && needs.publish-hello-kubernetes-image.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -44,7 +47,7 @@ jobs:
               "helm/hello-kubernetes/values.yaml": {
                 "docker.image.version": "${{ github.sha }}"
               },
-              "helm/hello-kubernetes/Chart.yaml.yaml": {
+              "helm/hello-kubernetes/Chart.yaml": {
                 "version": "${{ github.run_number }}"
               }
             }
