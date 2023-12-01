@@ -4,7 +4,7 @@ on:
     paths:
       - app/**
 jobs:
-  publish-sample-ui-docker-image:
+  publish-hello-kubernetes-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,7 +18,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build the sample-ui Docker image
+      - name: Build the Hello Kubernetes Docker image
         run: |
           IMAGE_TAG="ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}"
           docker build . -f Dockerfile --tag $IMAGE_TAG
