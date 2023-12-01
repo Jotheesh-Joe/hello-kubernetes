@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Kubernetes!</title>
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:300">
+    <link rel="icon" type="image/x-icon" href="static/images/logo.png">
+</head>
+<body>
+
+  <div class="main">
+          <img src="static/images/kubernetes.png"/>
+    <div class="content">
+     <div id="message">
+        Hello from {{ cluster }}
+</div>
+<div id="info">
+  <table>
+    <tr>
+      <th>NAMESPACE : </th>
+      <td>{{ namespace }}</td>
+    </tr>
+    <tr>
+      <th>POD : </th>
+      <td>{{ pod }}</td>
+    </tr>
+    <tr>
+      <th>NODE : </th>
+      <td>{{ node }}</td>
+    </tr>
+  </table>
+</div>
+<div id="footer">
+  jotheeswaran/hello-kubernetes:1.8
+ </div>
+ </div>
+</div>
+</body>
+</html>
