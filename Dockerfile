@@ -4,16 +4,14 @@ LABEL maintainer="Jotheeswaran Lakshmanan"
 
 WORKDIR /app
 
-Copy app/requirements.txt /app
+COPY app/requirements.txt /app
 
-Copy app/app.py /app
+COPY app/app.py /app
+
+COPY sample-app-ui/static /app/static
+
+COPY sample-app-ui/templates /app/templates
 
 RUN pip install -r ./requirements.txt
-
-RUN useradd -r -u 5500 appuser
-
-RUN chown -R appuser:appuser /app
-
-USER 5500
 
 CMD ["python", "-u", "./app.py"]
