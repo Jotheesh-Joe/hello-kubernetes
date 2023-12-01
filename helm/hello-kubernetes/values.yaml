@@ -1,0 +1,32 @@
+namespace: hello-kubernetes
+
+docker:
+  registry: ghcr.io/jotheesh-joe
+  image:
+    name: hello-kubernetes
+    version: 2e306a8682574dc53f17f46f7a363b554e69875b
+  container:
+    targetPort: 80
+ 
+service:
+  port: 8000
+  protocol: http
+  
+deployment:
+  replicas: 1
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 4Gi
+  limits:
+    cpu: 2000m
+    memory: 16Gi
+
+istio:
+  config:
+    domain: hello-kubernetes.jotheesh-joe.com
+    tls:
+      enabled: true
+      mode: simple
+      secret: hello-kubernetes-secret

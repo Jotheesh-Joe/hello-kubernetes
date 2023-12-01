@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-deployment
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        version: v1
+    spec:
+      containers:
+      - image: {{ .Values.docker.registry }}/{{ .Values.docker.image.name }}:{{ .Values.docker.image.version }}
+        imagePullPolicy: IfNotPresent
+        name: {{ .Chart.Name }}-container
+        ports:
+        - containerPort: {{ .Values.docker.container.targetPort }}
+        {{- if .Values.resources }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        {{- end }}        
+        env:
+        - name: ISTIO_META_CLUSTER_ID
+          value: {{ upper .Values.cluster.name }}	
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: NODE
+          valueFrom:
+            fieldRef:
+               fieldPath: spec.nodeName
+        - name: POD
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
