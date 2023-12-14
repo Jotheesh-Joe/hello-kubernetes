@@ -26,4 +26,3 @@ spec:
       mode: {{ .Values.istio.config.tls.mode }}
       credentialName: {{ .Values.istio.config.tls.secret }}
   {{- end }}
-	
