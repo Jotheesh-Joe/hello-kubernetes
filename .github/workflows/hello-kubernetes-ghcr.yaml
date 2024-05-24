@@ -30,9 +30,8 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL'
+          severity: 'CRITICAL,HIGH'
       - name: Push the Docker image
-        if: success()
         run: |
           IMAGE_TAG="ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}"
           docker push $IMAGE_TAG
