@@ -26,15 +26,11 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: 'ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}'
-          format: 'table'
+          format: 'json'
+          output: 'trivy-report.txt'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
-      - name: Upload Trivy Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: trivy-report
-          path: trivy-report.json
       - name: Generate Trivy Report Summary
         id: generate_summary
         run: |
