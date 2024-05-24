@@ -3,7 +3,7 @@ docker:
   registry: ghcr.io/jotheesh-joe
   image:
     name: hello-kubernetes
-    version: 4e3977f8c9c4c65e6a4b0e364b578e7b417a9724
+    version: 2cba74916d4cd7657fdf50ba9c7a0c86d7977219
   container:
     targetPort: 80
 service:
