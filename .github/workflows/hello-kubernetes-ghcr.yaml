@@ -22,6 +22,19 @@ jobs:
         run: |
           IMAGE_TAG="ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}"
           docker build . -f app/Dockerfile --tag $IMAGE_TAG
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: 'ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+      - name: Push the Docker image
+        if: success()
+        run: |
+          IMAGE_TAG="ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}"
           docker push $IMAGE_TAG
   
   
