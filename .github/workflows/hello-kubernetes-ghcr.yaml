@@ -36,17 +36,9 @@ jobs:
         with:
           name: trivy-report
           path: trivy-report.json
-      - name: Generate Trivy Report Summary
-        id: generate_summary
-        run: |
-          echo "Vulnerability Report for $IMAGE_TAG" > trivy-report-summary.txt
-          echo >> trivy-report-summary.txt
-          jq -r '.Results[].Vulnerabilities[] | [.PkgName, .VulnerabilityID, .Severity, .InstalledVersion, .FixedVersion, .Title] | @tsv' trivy-report.json >> trivy-report-summary.txt
-      - name: Push the Docker image with vulnerability label
+      - name: Push the Docker image
         run: |
           IMAGE_TAG="ghcr.io/jotheesh-joe/hello-kubernetes:${{ github.sha }}"
-          DESCRIPTION="$(cat trivy-report-summary.txt)"
-          docker build . -f app/Dockerfile --label "org.opencontainers.image.description=$DESCRIPTION" --tag $IMAGE_TAG
           docker push $IMAGE_TAG
   
   
